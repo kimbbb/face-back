@@ -6,8 +6,9 @@ export const userSignIn = async (req, res) => {
 
   try {
     await connection.query(
-      `SELECT * FROM user WHERE id="${id}"`,
+      `SELECT * FROM user WHERE name="${id}"`,
       (err, result) => {
+        console.log(result)
         if (!result[0].user_password === password) {
           return res.status(400).json({
             status: 400,
@@ -46,15 +47,19 @@ export const userSignUp = async (req, res) => {
     await connection.query(
       `SELECT * FROM user WHERE id="${id}"`,
       (err, result) => {
-        if (!result.length == 0) {
+        console.log(result)
+        
+        if (result != null && !result.length == 0) {
           return res.status(400).json({
             status: 400,
             message: "존재하는 이름입니다",
           });
         } else {
           connection.query(
-            `INSERT INTO user(id, password) VALUES("${id}", "${password}")`,
+            `INSERT INTO user(name, password) VALUES("${id}", "${password}")`,
             (err, result) => {
+              console.log(err)
+
               console.log("✅ SignUp Ok");
               return res.status(201).json({
                 status: 201,
