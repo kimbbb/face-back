@@ -84,7 +84,7 @@ export const deleteBoard = async (req, res) => {
   console.log(id);
   try {
     await connection.query(
-      `delete from board where id="${id};"`,
+      `delete from board where id=${id};`,
       (err, result) => {
         return res.status(204).json({
           status: 204,
